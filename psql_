@@ -1,0 +1,8 @@
+sudo -u postgres createuser username -s
+
+# If you would like to set a password for the user, you can do the following
+sudo -u postgres psql
+postgres=# \password username
+
+# connect to specific database
+psql -U username -W -h 127.0.0.1 database_name
