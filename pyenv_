@@ -1,0 +1,69 @@
+#!/bin/bash
+
+sudo touch /var/tmp/dump
+sudo rm /var/tmp/dump
+
+cd && sudo apt update && sudo apt upgrade
+
+sudo apt install curl
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+
+sudo apt update
+sudo apt install -y git-core zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev software-properties-common libffi-dev nodejs
+sudo apt install -y make  libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+cd
+pyenv=`which pyenv`
+if [[ "" = $pyenv ]]
+then
+  sudo rm -rf /usr/local/pyenv
+  sudo mkdir -p /usr/local/pyenv
+  sudo chown $USER:$USER /usr/local/pyenv
+
+  sed -i '/pyenv/d' $HOME/.bashrc &> /dev/null
+  git clone https://github.com/pyenv/pyenv.git /usr/local/pyenv
+  echo 'export PYENV_ROOT=/usr/local/pyenv' >> $HOME/.bashrc
+  echo 'export PATH=/usr/local/pyenv/bin:$PATH' >> $HOME/.bashrc
+  echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> $HOME/.bashrc
+  # exec $SHELL
+  source $HOME/.bashrc
+
+  export PATH=/usr/local/pyenv/bin:$PATH
+  eval "$(pyenv init -)"
+
+  printf "\n\n\n"
+  read -p 'PLEASE SPECIFY PYTHON VERSION: ' python_version
+
+  pyenv install $python_version
+  pyenv global $python_version
+fi
+
+python --version
+
+# printf "\n\n\n"
+# echo "PLEASE SPECIFY DATABASE: "
+# echo "1. MySQL"
+# echo "2. PostgreSQL"
+#
+# read ver
+#
+# inf_loop=1
+# while [[ $inf_loop -eq 1 ]]
+# do
+#   if [[ $ver -eq 1 ]]
+#   then
+#     printf "\n\n\n"
+#     echo "Installing MySQL ..."
+#     sudo apt-get install mysql-server mysql-client libmysqlclient-dev
+#     inf_loop=0
+#   elif [[ $ver -eq 2 ]]
+#   then
+#     printf "\n\n\n"
+#     echo "Installing PostgreSQL ..."
+#     sudo apt install postgresql-12 libpq-dev
+#     inf_loop=0
+#   else
+#     echo "No database selected."
+#     read ver
+#   fi
+# done
