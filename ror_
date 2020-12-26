@@ -24,7 +24,7 @@ then
   sed -i '/rbenv/d' $HOME/.bashrc &> /dev/null
   git clone https://github.com/rbenv/rbenv.git /usr/local/rbenv
   echo 'export PATH=/usr/local/rbenv/bin:$PATH' >> $HOME/.bashrc
-  echo 'export RBENV_ROOT=/usr/local/rbenv/bin' >> $HOME/.bashrc
+  echo 'export RBENV_ROOT=/usr/local/rbenv/' >> $HOME/.bashrc
   echo 'eval "$(rbenv init -)"' >> $HOME/.bashrc
   # exec $SHELL
   source $HOME/.bashrc
